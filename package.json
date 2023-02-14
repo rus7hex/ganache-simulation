@@ -1,0 +1,16 @@
+{
+  "name": "ganache-simulation",
+  "version": "1.0.0",
+  "description": "An exmaple using Ganache programmatically",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "author": "Rus7heX <dick525724@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.0.2",
+    "ganache": "^7.7.4"
+  }
+}
