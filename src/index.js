@@ -1,5 +1,6 @@
 import Ganache from "ganache";
 import { ethers } from "ethers";
+import { getContractInterface } from "./contract.js";
 
 
 // keungz.eth
@@ -35,21 +36,10 @@ const txid = await ganache.send("eth_sendTransaction", [{
     value: `0x${(128 * 1e18).toString(16)}`,
 }]);
 
-const event = await ganache.once("message");
-console.log(event);
-console.log(event.data.result.topics);
-
 const receipt = await ganache.send("eth_getTransactionReceipt", [txid]);
-console.log(JSON.stringify(receipt))
-
-const code = await web3.getCode("0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb");
-const iface = new ethers.Interface(code);
+const iface = await getContractInterface("0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb");
 
 for (const log of receipt.logs) {
-    const event = iface.parseLog(
-        log.topics,
-        log.data,
-    );
-
+    const event = iface.parseLog(log);
     console.log(event)
 }
