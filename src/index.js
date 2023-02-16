@@ -25,8 +25,6 @@ const ganache = Ganache.provider({
 const balance = await ganache.send("eth_getBalance", [account]);
 console.log(parseInt(balance, 16) / 1e18);
 
-await ganache.send("eth_subscribe", ["logs"]);
-
 const txid = await ganache.send("eth_sendTransaction", [{
     from: account,
     to: "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb",
