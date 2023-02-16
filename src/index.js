@@ -1,5 +1,4 @@
 import Ganache from "ganache";
-import { ethers } from "ethers";
 import { getContractInterface } from "./contract.js";
 
 
@@ -22,7 +21,6 @@ const ganache = Ganache.provider({
         deleteCache: true,
     }
 });
-const web3 = new ethers.BrowserProvider(ganache);
 
 const balance = await ganache.send("eth_getBalance", [account]);
 console.log(parseInt(balance, 16) / 1e18);
@@ -40,6 +38,15 @@ const receipt = await ganache.send("eth_getTransactionReceipt", [txid]);
 const iface = await getContractInterface("0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb");
 
 for (const log of receipt.logs) {
-    const event = iface.parseLog(log);
-    console.log(event)
+    const data = iface.parseLog(log);
+    const args = {};
+    for (const key of Object.keys(data.args).slice(data.eventFragment.inputs.length)) {
+        args[key] = data.args[key].toString();
+    }
+    const event = {
+        name: data.name,
+        args
+    }
+
+    console.log(event);
 }

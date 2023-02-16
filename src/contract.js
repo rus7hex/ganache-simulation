@@ -1,4 +1,4 @@
-import { Interface } from "ethers";
+import { Interface } from "@ethersproject/abi";
 import Axios from "axios";
 
 
